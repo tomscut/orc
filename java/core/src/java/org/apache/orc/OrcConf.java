@@ -249,7 +249,7 @@ public enum OrcConf {
       "This value controls whether pre-ORC 27 files are using the hybrid or proleptic\n" +
       "calendar. Only Hive 3.1 and the C++ library wrote using the proleptic, so hybrid\n" +
       "is the default."),
-  ROW_BATCH_SIZE("orc.row.batch.size", "orc.row.batch.size", 1024,
+  ROW_BATCH_SIZE("orc.row.batch.size", "orc.row.batch.size", 128,
       "The number of rows to include in a orc vectorized reader batch. " +
       "The value should be carefully chosen to minimize overhead and avoid OOMs in reading data."),
   ROW_BATCH_CHILD_LIMIT("orc.row.child.limit", "orc.row.child.limit",

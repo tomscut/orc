@@ -667,6 +667,7 @@ public class ColumnStatisticsImpl implements ColumnStatistics {
   protected static final class StringStatisticsImpl extends ColumnStatisticsImpl
       implements StringColumnStatistics {
     public static final int MAX_BYTES_RECORDED = 1024;
+    public static final boolean TRIM_STRING_STATS = false;
     private Text minimum = null;
     private Text maximum = null;
     private long sum = 0;
@@ -716,7 +717,7 @@ public class ColumnStatisticsImpl implements ColumnStatistics {
     public void updateString(byte[] bytes, int offset, int length,
                              int repetitions) {
       if (minimum == null) {
-        if(length > MAX_BYTES_RECORDED) {
+        if(TRIM_STRING_STATS && length > MAX_BYTES_RECORDED) {
           minimum = truncateLowerBound(bytes, offset);
           maximum = truncateUpperBound(bytes, offset);
           isLowerBoundSet = true;
@@ -729,7 +730,7 @@ public class ColumnStatisticsImpl implements ColumnStatistics {
         }
       } else if (WritableComparator.compareBytes(minimum.getBytes(), 0,
           minimum.getLength(), bytes, offset, length) > 0) {
-        if(length > MAX_BYTES_RECORDED) {
+        if(TRIM_STRING_STATS && length > MAX_BYTES_RECORDED) {
           minimum = truncateLowerBound(bytes, offset);
           isLowerBoundSet = true;
         } else {
